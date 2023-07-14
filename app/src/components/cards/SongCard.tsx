@@ -1,4 +1,4 @@
-import {StyleSheet, View, Linking, Image} from 'react-native';
+import {Dimensions, StyleSheet, View, Linking, Image} from 'react-native';
 import Song from '../../models/Song';
 import {Border, Colors, Spacing} from '../../assets/Stylesheet';
 import React from 'react';
@@ -49,6 +49,8 @@ const SongCard = ({song}: SongCardProps) => {
   );
 };
 
+const dimensions = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   songCard: {
     display: 'flex',
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     padding: Spacing.small,
-    width: 200,
+    width: dimensions.width - 192.72727272727275,
   },
   right: {
     display: 'flex',
