@@ -1,41 +1,26 @@
-import {FlatList, View} from 'react-native';
+import {Image, Linking, StyleSheet, View} from 'react-native';
 import {useEffect} from 'react';
 import React from 'react';
 import RoundButton from '../components/buttons/RoundButton';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Colors, Spacing} from '../assets/Stylesheet';
+import {Border, Colors, Spacing} from '../assets/Stylesheet';
 import Footer from '../components/Footer';
-import SoundCloudSong from '../models/SoundCloudSong';
-import SongCard from '../components/cards/SongCard';
 import Text from '../components/Text';
+import SpotifySong from '../models/SpotifySong';
 
-const ResultsScreen = ({navigation}: any) => {
-  const songs: SoundCloudSong[] = [
-    new SoundCloudSong(
-      'CCRAX',
-      'Prada - Cassö Edit',
-      'cassö',
-      'https://i1.sndcdn.com/artworks-OwkI9maTTkoZYDUD-mWgSzQ-t500x500.jpg',
-    ),
-    new SoundCloudSong(
-      'qM6ht',
-      '(It Goes Like) Nanana',
-      'Peggy Gou',
-      'https://i1.sndcdn.com/artworks-J9Va6Szvss63-0-t500x500.png',
-    ),
-    new SoundCloudSong(
-      'sSU37',
-      'Where Have You Been',
-      'Dimitri K',
-      'https://i1.sndcdn.com/artworks-fO5SHom8Bx5HTafD-R0kcyQ-t500x500.jpg',
-    ),
-  ];
+const ResultScreen = ({navigation, route}: any) => {
+  const song: SpotifySong = route.params?.song;
+
   useEffect(() => {}, []);
 
   const goToIdentification = () => {
     navigation.navigate({
       name: 'Identification',
     });
+  };
+
+  const handlePlaySong = async () => {
+    await Linking.openURL(song.url);
   };
 
   return (
@@ -47,15 +32,27 @@ const ResultsScreen = ({navigation}: any) => {
           alignItems: 'center',
           paddingTop: Spacing.extraLarge,
         }}>
-        <Text size="xl" fontStyle="bold" style={{marginBottom: Spacing.medium}}>
-          3 Results
-        </Text>
-        <FlatList
-          style={{paddingHorizontal: Spacing.small}}
-          data={songs}
-          renderItem={({item}) => <SongCard song={item} />}
-          keyExtractor={item => item.songId}
+        <Image
+          source={{uri: song.url}}
+          style={styles.image}
+          resizeMode={'cover'}
         />
+        <Text size="xl" fontStyle="bold" style={{marginBottom: Spacing.medium}}>
+          {song.title}
+        </Text>
+        <Text
+          size="l"
+          fontStyle="medium"
+          style={{marginBottom: Spacing.medium}}>
+          {song.artist}
+        </Text>
+        <RoundButton
+          type={'primary'}
+          size={'small'}
+          onPress={handlePlaySong}
+          accessibilityHint={`On press play song ${song.title} from ${song.artist}`}>
+          <MIcon name={'play'} size={40} color={Colors.white} />
+        </RoundButton>
       </View>
       <View
         style={{
@@ -76,4 +73,12 @@ const ResultsScreen = ({navigation}: any) => {
   );
 };
 
-export default ResultsScreen;
+const styles = StyleSheet.create({
+  image: {
+    width: 400,
+    height: 400,
+    borderRadius: Border.rounded,
+  },
+});
+
+export default ResultScreen;

@@ -1,5 +1,5 @@
 import {Dimensions, StyleSheet, View, Linking, Image} from 'react-native';
-import Song from '../../models/Song';
+import SoundCloudSong from '../../models/SoundCloudSong';
 import {Border, Colors, Spacing} from '../../assets/Stylesheet';
 import React from 'react';
 import Text from '../Text';
@@ -7,7 +7,7 @@ import RoundButton from '../buttons/RoundButton';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type SongCardProps = {
-  song: Song;
+  song: SoundCloudSong;
 };
 
 const SongCard = ({song}: SongCardProps) => {

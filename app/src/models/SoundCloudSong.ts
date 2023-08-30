@@ -1,4 +1,4 @@
-export default class Song {
+export default class SoundCloudSong {
   songId: string;
   name: string;
   artist: string;
