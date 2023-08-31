@@ -5,25 +5,25 @@ import RoundButton from '../components/buttons/RoundButton';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors, Spacing} from '../assets/Stylesheet';
 import Footer from '../components/Footer';
-import Song from '../models/Song';
+import SoundCloudSong from '../models/SoundCloudSong';
 import SongCard from '../components/cards/SongCard';
 import Text from '../components/Text';
 
 const ResultsScreen = ({navigation}: any) => {
-  const songs: Song[] = [
-    new Song(
+  const songs: SoundCloudSong[] = [
+    new SoundCloudSong(
       'CCRAX',
       'Prada - Cassö Edit',
       'cassö',
       'https://i1.sndcdn.com/artworks-OwkI9maTTkoZYDUD-mWgSzQ-t500x500.jpg',
     ),
-    new Song(
+    new SoundCloudSong(
       'qM6ht',
       '(It Goes Like) Nanana',
       'Peggy Gou',
       'https://i1.sndcdn.com/artworks-J9Va6Szvss63-0-t500x500.png',
     ),
-    new Song(
+    new SoundCloudSong(
       'sSU37',
       'Where Have You Been',
       'Dimitri K',

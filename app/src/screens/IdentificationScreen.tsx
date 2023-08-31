@@ -1,21 +1,16 @@
 import {View} from 'react-native';
 import {useEffect, useState} from 'react';
-import React, {useCallback} from 'react';
+import React from 'react';
 import MorphingCircle from '../components/animations/MorphingCircle';
 import {Colors} from '../assets/Stylesheet';
 import RoundButton from '../components/buttons/RoundButton';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Footer from '../components/Footer';
 import Text from '../components/Text';
+import Axios from '../utils/modules/Axios';
 
 const IdentificationScreen = ({navigation}: any) => {
   const [status, setStatus] = useState<string>('listen');
-
-  const goToResults = useCallback(() => {
-    navigation.navigate({
-      name: 'Results',
-    });
-  }, [navigation]);
 
   const goToHome = () => {
     navigation.navigate({
@@ -24,6 +19,22 @@ const IdentificationScreen = ({navigation}: any) => {
   };
 
   useEffect(() => {
+    Axios.post('/api/recognize/detect').then(response => {
+      if (!response.data.success) {
+        return;
+      }
+      navigation.navigate({
+        name: 'Results',
+        params: {
+          song: {
+            artist: response.data.artist,
+            title: response.data.title,
+            image: response.data.image,
+            url: response.data.url,
+          },
+        },
+      });
+    });
     if (status === 'listen') {
       setTimeout(() => {
         setStatus('findMatch');
@@ -37,11 +48,9 @@ const IdentificationScreen = ({navigation}: any) => {
         setStatus('lastTry');
       }, 4000);
     } else if (status === 'lastTry') {
-      setTimeout(() => {
-        goToResults();
-      }, 4000);
+      setTimeout(() => {}, 4000);
     }
-  }, [goToResults, status, setStatus]);
+  }, [status, setStatus, navigation]);
 
   return (
     <View style={{height: '100%'}}>
